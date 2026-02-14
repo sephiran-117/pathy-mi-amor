@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pathy mi amor</title>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  background: radial-gradient(circle at bottom, #1a0033, #000000);
+  font-family: 'Georgia', serif;
+  color: white;
+  text-align: center;
+}
+
+/* Texto superior */
+h1 {
+  position: absolute;
+  top: 8%;
+  width: 100%;
+  font-size: 42px;
+  text-shadow: 0 0 15px #ff66cc;
+}
+
+/* Texto inferior */
+h2 {
+  position: absolute;
+  bottom: 8%;
+  width: 100%;
+  font-size: 32px;
+  text-shadow: 0 0 10px #cc99ff;
+}
+
+/* Estrellas */
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+  from {opacity: 0.2;}
+  to {opacity: 1;}
+}
+
+/* Tulipanes */
+.tulip {
+  position: absolute;
+  font-size: 28px;
+  animation: float linear infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(100vh); }
+  100% { transform: translateY(-10vh); }
+}
+</style>
+</head>
+
+<body>
+
+<h1>Pathy mi amor 🌷</h1>
+<h2>Te amo mucho</h2>
+
+<script>
+
+/* Crear estrellas */
+for (let i = 0; i < 250; i++) {
+  let star = document.createElement("div");
+  star.className = "star";
+  star.style.top = Math.random() * window.innerHeight + "px";
+  star.style.left = Math.random() * window.innerWidth + "px";
+  star.style.animationDuration = (1 + Math.random() * 2) + "s";
+  document.body.appendChild(star);
+}
+
+/* Crear tulipanes flotando */
+for (let i = 0; i < 25; i++) {
+  let tulip = document.createElement("div");
+  tulip.className = "tulip";
+  tulip.innerHTML = "🌷";
+  tulip.style.left = Math.random() * window.innerWidth + "px";
+  tulip.style.animationDuration = (6 + Math.random() * 6) + "s";
+  document.body.appendChild(tulip);
+}
+
+</script>
+
+</body>
+</html>
