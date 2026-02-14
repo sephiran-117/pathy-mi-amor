@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pathy mi amor</title>
+<title>Galaxia del Amor</title>
 
 <style>
 body {
   margin: 0;
   overflow: hidden;
-  background: radial-gradient(circle at center, #1a0033, #000000);
+  background: radial-gradient(circle at center, #330000, #000000);
   font-family: Georgia, serif;
   color: white;
   text-align: center;
 }
 
-/* Canvas galaxia */
+/* Canvas */
 canvas {
   position: fixed;
   top: 0;
@@ -23,100 +23,104 @@ canvas {
   z-index: -1;
 }
 
-/* Tulipanes */
-.tulip {
+/* Mensajes */
+.message {
   position: absolute;
-  font-size: 28px;
-  animation: float linear infinite;
+  font-size: 18px;
+  color: #ff99cc;
+  animation: floatText 8s linear forwards;
 }
 
-@keyframes float {
-  from { transform: translateY(100vh); }
-  to { transform: translateY(-10vh); }
+@keyframes floatText {
+  from { transform: translateY(100vh); opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
 }
 
 h1 {
   position: relative;
   top: 40vh;
   font-size: 28px;
-  text-shadow: 0 0 20px #ff66cc;
+  text-shadow: 0 0 20px red;
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="galaxy"></canvas>
-<h1>Pathy mi amor 🌷✨</h1>
+<canvas id="bg"></canvas>
+<h1>Galaxia del Amor ❤️</h1>
 
 <script>
-const canvas = document.getElementById("galaxy");
+const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let stars = [];
-let mouseX = canvas.width / 2;
-let mouseY = canvas.height / 2;
+let hearts = [];
+let mouseX = canvas.width/2;
+let mouseY = canvas.height/2;
 
-/* Crear estrellas */
-for (let i = 0; i < 500; i++) {
-  stars.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    size: Math.random() * 2
+/* Crear corazones */
+for (let i = 0; i < 80; i++) {
+  hearts.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    size: Math.random()*20 + 10
   });
 }
 
-/* Movimiento con dedo o mouse */
-window.addEventListener("mousemove", e => {
+/* Movimiento interactivo */
+window.addEventListener("mousemove", e=>{
   mouseX = e.clientX;
   mouseY = e.clientY;
 });
-
-window.addEventListener("touchmove", e => {
+window.addEventListener("touchmove", e=>{
   mouseX = e.touches[0].clientX;
   mouseY = e.touches[0].clientY;
 });
 
-/* Animación galaxia */
-function animate() {
-  ctx.fillStyle = "rgba(10,0,30,0.4)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+/* Dibujar */
+function animate(){
+  ctx.fillStyle="rgba(20,0,0,0.4)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
 
-  stars.forEach(star => {
-    let dx = (mouseX - canvas.width / 2) * 0.0005;
-    let dy = (mouseY - canvas.height / 2) * 0.0005;
+  hearts.forEach(h=>{
+    let dx=(mouseX-canvas.width/2)*0.0005;
+    let dy=(mouseY-canvas.height/2)*0.0005;
+    h.x+=dx*30;
+    h.y+=dy*30;
 
-    star.x += dx * 20;
-    star.y += dy * 20;
-
-    if (star.x < 0) star.x = canvas.width;
-    if (star.x > canvas.width) star.x = 0;
-    if (star.y < 0) star.y = canvas.height;
-    if (star.y > canvas.height) star.y = 0;
-
-    ctx.beginPath();
-    ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-    ctx.fillStyle = "white";
-    ctx.fill();
+    ctx.font=h.size+"px serif";
+    ctx.fillText("❤️",h.x,h.y);
   });
 
   requestAnimationFrame(animate);
 }
-
 animate();
 
-/* Tulipanes */
-for (let i = 0; i < 20; i++) {
-  let tulip = document.createElement("div");
-  tulip.className = "tulip";
-  tulip.innerHTML = "🌷";
-  tulip.style.left = Math.random() * 100 + "vw";
-  tulip.style.animationDuration = (6 + Math.random() * 6) + "s";
-  document.body.appendChild(tulip);
-}
+/* Mensajes bonitos */
+const textos=[
+"Te amo ❤️",
+"Eres mi universo ✨",
+"Contigo todo es mejor 💖",
+"Eres mi persona favorita 🌷",
+"Siempre tú 💕",
+"Mi lugar seguro 🫶",
+"Eres magia ✨",
+"Mi corazón es tuyo ❤️"
+];
+
+setInterval(()=>{
+  let msg=document.createElement("div");
+  msg.className="message";
+  msg.innerHTML=textos[Math.floor(Math.random()*textos.length)];
+  msg.style.left=Math.random()*80+"vw";
+  document.body.appendChild(msg);
+
+  setTimeout(()=>{msg.remove();},8000);
+},1500);
+
 </script>
 
 </body>
