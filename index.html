@@ -9,24 +9,28 @@
 body {
   margin: 0;
   overflow: hidden;
-  background: black;
   font-family: Georgia, serif;
   color: white;
   text-align: center;
+  background: url("https://images.unsplash.com/photo-1446776811953-b23d57bd21aa") no-repeat center center fixed;
+  background-size: cover;
 }
 
-/* Canvas galaxia */
-#galaxy {
+/* Capa oscura encima para que el texto resalte */
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 0, 30, 0.6);
   z-index: -1;
 }
 
 /* Tulipanes */
 .tulip {
   position: absolute;
-  font-size: 28px;
+  font-size: 30px;
   animation: float linear infinite;
 }
 
@@ -38,42 +42,31 @@ body {
 h1 {
   position: relative;
   top: 40vh;
-  font-size: 28px;
-  text-shadow: 0 0 15px #ff66cc;
+  font-size: 30px;
+  text-shadow: 0 0 20px #ff66cc;
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="galaxy"></canvas>
+<div class="overlay"></div>
 
 <h1>Pathy mi amor 🌷✨</h1>
 
 <script>
-/* ===== GALAXIA REAL CON CANVAS ===== */
-const canvas = document.getElementById("galaxy");
-const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let stars = [];
-
-for (let i = 0; i < 400; i++) {
-  stars.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    radius: Math.random() * 1.5,
-    alpha: Math.random()
-  });
+/* Tulipanes flotando */
+for (let i = 0; i < 25; i++) {
+  let tulip = document.createElement("div");
+  tulip.className = "tulip";
+  tulip.innerHTML = "🌷";
+  tulip.style.left = Math.random() * 100 + "vw";
+  tulip.style.animationDuration = (6 + Math.random() * 6) + "s";
+  document.body.appendChild(tulip);
 }
 
-function drawGalaxy() {
-  ctx.fillStyle = "rgba(0,0,20,0.4)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+</script>
 
-  stars.forEach(star => {
-    ctx.beginPath();
-    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(255,255,255," + star.alpha + ")";
+</body>
+</html>
