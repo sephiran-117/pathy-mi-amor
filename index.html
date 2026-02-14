@@ -3,86 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Galaxia de Tulipanes</title>
+<title>Pathy mi amor</title>
 
 <style>
 body {
   margin: 0;
   overflow: hidden;
-  background: radial-gradient(circle at 20% 30%, #2a0050, transparent 40%),
-              radial-gradient(circle at 80% 70%, #3b0066, transparent 40%),
-              radial-gradient(circle at center, #0d001a 0%, #000000 80%);
-  font-family: 'Georgia', serif;
+  background: black;
+  font-family: Georgia, serif;
   color: white;
   text-align: center;
 }
 
-/* Estrellas */
-.star {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: white;
-  border-radius: 50%;
-  animation: twinkle 2s infinite alternate;
-}
-
-@keyframes twinkle {
-  from { opacity: 0.3; }
-  to { opacity: 1; }
+/* Canvas galaxia */
+#galaxy {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
 /* Tulipanes */
 .tulip {
   position: absolute;
-  font-size: 30px;
-  animation: float 10s linear infinite;
+  font-size: 28px;
+  animation: float linear infinite;
 }
 
 @keyframes float {
-  from {
-    transform: translateY(100vh);
-  }
-  to {
-    transform: translateY(-10vh);
-  }
+  from { transform: translateY(100vh); }
+  to { transform: translateY(-10vh); }
 }
 
 h1 {
   position: relative;
   top: 40vh;
   font-size: 28px;
+  text-shadow: 0 0 15px #ff66cc;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Para ti 🌷✨</h1>
+<canvas id="galaxy"></canvas>
+
+<h1>Pathy mi amor 🌷✨</h1>
 
 <script>
+/* ===== GALAXIA REAL CON CANVAS ===== */
+const canvas = document.getElementById("galaxy");
+const ctx = canvas.getContext("2d");
 
-/* Crear estrellas */
-for (let i = 0; i < 80; i++) {
-  let star = document.createElement("div");
-  star.className = "star";
-  star.style.top = Math.random() * 100 + "vh";
-  star.style.left = Math.random() * 100 + "vw";
-  star.style.animationDuration = (Math.random() * 2 + 1) + "s";
-  document.body.appendChild(star);
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = [];
+
+for (let i = 0; i < 400; i++) {
+  stars.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    radius: Math.random() * 1.5,
+    alpha: Math.random()
+  });
 }
 
-/* Crear tulipanes */
-for (let i = 0; i < 15; i++) {
-  let tulip = document.createElement("div");
-  tulip.className = "tulip";
-  tulip.innerHTML = "🌷";
-  tulip.style.left = Math.random() * 100 + "vw";
-  tulip.style.animationDuration = (Math.random() * 5 + 8) + "s";
-  document.body.appendChild(tulip);
-}
+function drawGalaxy() {
+  ctx.fillStyle = "rgba(0,0,20,0.4)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-</script>
-
-</body>
-</html>
+  stars.forEach(star => {
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(255,255,255," + star.alpha + ")";
